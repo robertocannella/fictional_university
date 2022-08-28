@@ -17,6 +17,9 @@ function rc_fu_style_loader(){
 add_action('wp_enqueue_scripts', 'rc_fu_style_loader');
 
 function rc_fu_features(){
+    register_nav_menu('headerMenuLocation1', 'Header Menu Location 1');
+    register_nav_menu('footerMenuLocation1', 'Footer Menu Location 1');
+    register_nav_menu('footerMenuLocation2', 'Footer Menu Location 2');
     add_theme_support('title-tag');
 }
 add_action('after_setup_theme', 'rc_fu_features');
