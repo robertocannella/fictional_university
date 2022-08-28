@@ -2,7 +2,7 @@
 <project version="4">
   <component name="WebServers">
     <option name="servers">
-      <webServer id="76adc340-18ed-425e-bcc9-e900bb681e2c" name="ftp.cannellabrothers.com" url="http://robertocannella.com/fictional_university">
+      <webServer id="76adc340-18ed-425e-bcc9-e900bb681e2c" name="ftp.cannellabrothers.com" url="/">
         <fileTransfer rootFolder="/home/iqv6ex73gllk/robertocannella.com/fictional_university" accessType="SFTP" host="68.178.193.194" port="22" sshConfigId="eb08ff80-182a-4e15-a979-74505aeb8460" sshConfig="iqv6ex73gllk@68.178.193.194:22 key" keyPair="true">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
