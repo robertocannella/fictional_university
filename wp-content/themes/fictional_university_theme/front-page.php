@@ -25,7 +25,7 @@ get_header(); ?>
                     <?php
                     $today = date('Ymd');
                     $homePageEvents = new WP_Query([
-                            'posts_per_page'=>-1,
+                            'posts_per_page'=>2,
                             'post_type'=>'event',
                             //'orderby'=> 'title',
                             'order'=>'ASC',

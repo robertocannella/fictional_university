@@ -23,3 +23,37 @@ function rc_fu_features(){
     add_theme_support('title-tag');
 }
 add_action('after_setup_theme', 'rc_fu_features');
+
+/**
+ * Manipulates the Query Object For the Events post type sorting
+ *
+ * @param $query
+ * @return void
+ */
+function rc_fu_adjust_queries($query){
+    $today = date('Ymd');
+    // Checks:
+    // Is NOT on admin site
+    // Is the Event archive post type
+    // Is NOT a custom query
+    if (!is_admin() &&
+        is_post_type_archive('event') &&
+        $query->is_main_query()){
+
+        $query->set('meta_key','event_date');
+        $query->set('orderby','meta_value_num');
+        $query->set('order','ASC');
+        $query->set('meta_query', [
+                [
+                    'key'=>'event_date',
+                    'compare'=>'>=',
+                    'value'=>$today,
+                    'type'=>'numeric'
+                ]
+            ]
+        );
+
+
+    }
+}
+add_action('pre_get_posts','rc_fu_adjust_queries');
