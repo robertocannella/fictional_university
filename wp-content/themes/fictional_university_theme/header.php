@@ -35,7 +35,7 @@
                     <li <?php if (is_page('programs') || wp_get_post_parent_id(0) == 8) echo 'class="current-menu-item"'?>><a href="<?php echo site_url('/about-us');?>">Programs</a></li>
                     <li <?php if (is_page('events') || wp_get_post_parent_id(0) == 8) echo 'class="current-menu-item"'?>><a href="<?php echo site_url('/about-us');?>">Events</a></li>
                     <li <?php if (is_page('campuses') || wp_get_post_parent_id(0) == 8) echo 'class="current-menu-item"'?>><a href="<?php echo site_url('/about-us');?>">Campuses</a></li>
-                    <li <?php if (is_home('blog') || wp_get_post_parent_id(0) == 30) echo 'class="current-menu-item"'?>><a href="<?php echo site_url('/blog');?>">Blog</a></li>
+                    <li <?php if (get_post_type() == 'post') echo 'class="current-menu-item"'?>><a href="<?php echo site_url('/blog');?>">Blog</a></li>
                 </ul>
 
             </nav>
