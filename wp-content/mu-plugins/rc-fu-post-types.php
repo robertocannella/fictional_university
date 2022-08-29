@@ -8,6 +8,15 @@
 
 function rc_fu_post_types(){
     register_post_type('event',[
+        'show_in_rest'=>true,
+        'supports'=> [
+            'title',
+            'editor',
+            'excerpt'
+        ],
+        'rewrite'=>[
+          'slug'=> 'events'
+        ],
         'public'=>true,
         'labels'=>[
             'name'=>'Events',
@@ -16,7 +25,8 @@ function rc_fu_post_types(){
             'edit_item'=> 'Edit Event',
             'all_items'=> 'All Events'
         ],
-        'menu_icon'=>'dashicons-calendar'
+        'menu_icon'=>'dashicons-calendar',
+        'has_archive'=> true
     ]);
 }
 add_action('init','rc_fu_post_types');
