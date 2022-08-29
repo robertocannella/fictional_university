@@ -1,6 +1,6 @@
 <?php
 /**
- * 'Single post template'
+ * 'Single Blog post template'
  *
  * @package 'fictional_university'
  */

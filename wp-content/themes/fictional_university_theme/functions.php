@@ -31,6 +31,12 @@ add_action('after_setup_theme', 'rc_fu_features');
  * @return void
  */
 function rc_fu_adjust_queries($query){
+    if (!is_admin() && is_post_type_archive('program') && $query->is_main_query()){
+        $query->set('orderby', 'title');
+        $query->set('order', 'ASC');
+        $query->set('post_per_page', -1);
+    }
+
     $today = date('Ymd');
     // Checks:
     // Is NOT on admin site
@@ -52,8 +58,7 @@ function rc_fu_adjust_queries($query){
                 ]
             ]
         );
-
-
     }
 }
 add_action('pre_get_posts','rc_fu_adjust_queries');
+
