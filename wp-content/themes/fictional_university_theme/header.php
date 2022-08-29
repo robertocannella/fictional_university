@@ -29,7 +29,6 @@
 //                    'theme_location'=>'headerMenuLocation1'
 //                ]);
 //                ?>
-
                  <ul>
                     <li <?php if (is_page('about-us') || wp_get_post_parent_id(0)== 8) echo 'class="current-menu-item"'?>><a href="<?php echo site_url('/about-us');?>">About Us</a></li>
                     <li <?php if (is_page('programs') || wp_get_post_parent_id(0)== 8) echo 'class="current-menu-item"'?>><a href="#">Programs</a></li>
