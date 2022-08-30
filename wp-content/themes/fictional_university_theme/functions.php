@@ -20,7 +20,14 @@ function rc_fu_features(){
     register_nav_menu('headerMenuLocation1', 'Header Menu Location 1');
     register_nav_menu('footerMenuLocation1', 'Footer Menu Location 1');
     register_nav_menu('footerMenuLocation2', 'Footer Menu Location 2');
+
+
     add_theme_support('title-tag');
+    add_theme_support('post-thumbnails');
+
+    // WP creates the following additional image sizes
+    add_image_size('professor-landscape', 400, 260,true);
+    add_image_size('professor-portrait', 480, 650,true);
 }
 add_action('after_setup_theme', 'rc_fu_features');
 
