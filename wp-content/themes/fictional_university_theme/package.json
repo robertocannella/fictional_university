@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "wp-scripts ../../../../Downloads/university-static-master/build",
+    "build": "wp-scripts build",
     "start": "wp-scripts start",
     "dev": "wp-scripts start",
     "devFast": "wp-scripts start",
