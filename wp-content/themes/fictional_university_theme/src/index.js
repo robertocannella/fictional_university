@@ -8,5 +8,3 @@ import HeroSlider from "./modules/HeroSlider"
 const mobileMenu = new MobileMenu()
 const heroSlider = new HeroSlider()
 
-alert("just a test");
-console.log("TEST");
