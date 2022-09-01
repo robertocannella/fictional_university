@@ -5,6 +5,43 @@
  * @package 'fictional_university'
  */
 
+function pageBanner($title = null, $subtitle = null, $photo = null) {
+
+    $args = [
+            'title'=>$title,
+            'subtitle'=>$subtitle,
+            'photo'=>$photo
+    ];
+    if (!$args['title']) {
+        $args['title'] = get_the_title();
+    }
+
+    if (!$args['subtitle']) {
+        $args['subtitle'] = get_field('page_banner_subtitle');
+    }
+
+    if (!$args['photo']) {
+        if (get_field('page_banner_background_image') AND !is_archive() AND !is_home() ) {
+            $args['photo'] = get_field('page_banner_background_image')['sizes']['page-banner'];
+        } else {
+            $args['photo'] = get_theme_file_uri('/images/ocean.jpg');
+        }
+    }
+
+    ?>
+    <div class="page-banner">
+        <div class="page-banner__bg-image" style="background-image: url(<?php echo $args['photo'] ?>);"></div>
+        <div class="page-banner__content container container--narrow">
+            <h1 class="page-banner__title"><?php echo $args['title'] ?></h1>
+            <div class="page-banner__intro">
+                <p><?php echo $args['subtitle'] ?></p>
+            </div>
+        </div>
+    </div>
+    <?php
+}
+
+
 function rc_fu_style_loader(){
     wp_enqueue_script('rc-fu-main-js', get_theme_file_uri('/build/index.js'),['jquery'],1.0, true);
 
@@ -28,6 +65,7 @@ function rc_fu_features(){
     // WP creates the following additional image sizes
     add_image_size('professor-landscape', 400, 260,true);
     add_image_size('professor-portrait', 480, 650,true);
+    add_image_size('page-banner', 1500, 350,true);
 }
 add_action('after_setup_theme', 'rc_fu_features');
 

@@ -6,19 +6,13 @@
  */
 
 
-get_header(); ?>
+get_header();
+pageBanner(
+    $title='Past Events',
+    $subtitle= 'A recap of our past events'
+    );
 
-
-    <div class="page-banner">
-        <div class="page-banner__bg-image" style="background-image: url(<?php echo get_theme_file_uri('/images/ocean.jpg')?>)"></div>
-        <div class="page-banner__content container container--narrow">
-            <h1 class="page-banner__title">Past Events</h1>
-            <div class="page-banner__intro">
-                <p>A recap of our past events</p>
-            </div>
-        </div>
-    </div>
-
+?>
     <div class="container container--narrow page-section">
         <?php
         $today = date('Ymd');
