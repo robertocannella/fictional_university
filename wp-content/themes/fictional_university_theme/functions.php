@@ -79,11 +79,17 @@ add_action('after_setup_theme', 'rc_fu_features');
  * @return void
  */
 function rc_fu_adjust_queries($query){
+
+    // Get all campuses (regardless of size)
+    if (!is_admin() && is_post_type_archive('campus') && $query->is_main_query()){
+        $query->set('posts_per_page', -1);
+    }
     if (!is_admin() && is_post_type_archive('program') && $query->is_main_query()){
         $query->set('orderby', 'title');
         $query->set('order', 'ASC');
-        $query->set('post_per_page', -1);
+        $query->set('posts_per_page', -1);
     }
+
 
     $today = date('Ymd');
     // Checks:

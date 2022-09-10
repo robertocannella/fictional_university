@@ -83,14 +83,30 @@ while (have_posts()){
                 ]
             ]
         ]);
-        if ($homePageEvents->have_posts()){
+        if ($homePageEvents->have_posts()) {
             echo '<hr class="section-break">';
-        echo '<h2 class="headline headline--medium">Upcoming ' . get_the_title() . ' Events</h2>';
-        while ($homePageEvents->have_posts()): $homePageEvents->the_post();
+            echo '<h2 class="headline headline--medium">Upcoming ' . get_the_title() . ' Events</h2>';
+            while ($homePageEvents->have_posts()): $homePageEvents->the_post();
 
-        get_template_part('template-parts/content', 'event');
-        endwhile;
-        wp_reset_postdata(); } ?>
+                get_template_part('template-parts/content', 'event');
+
+
+            endwhile;
+        }
+        wp_reset_postdata();
+        $relatedCampuses = get_field('related_campus');
+        if ($relatedCampuses){
+            echo '<hr class="section-break">';
+            echo '<h2 class="headline headline--medium">' . get_the_title() .' is available at these Campuses </h2>';   
+            echo '<ul class="min-list link-list"';
+            foreach ($relatedCampuses as $campus){
+                ?>
+                <li><a href="<?php echo get_the_permalink($campus);?>"><?php echo get_the_title($campus) ?></a></li>
+                <?php
+            }
+            echo '</ul>';
+        }
+        ?>
 
     </div>
 
