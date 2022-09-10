@@ -5,6 +5,8 @@
  * @package 'fictional_university'
  */
 
+
+const GOOGLE_API_KEY = 'AIzaSyBoyupnAPzqq56i3gq5z-V1B1bBXWyNCPk';
 function pageBanner($title = null, $subtitle = null, $photo = null) {
 
     $args = [
@@ -43,6 +45,7 @@ function pageBanner($title = null, $subtitle = null, $photo = null) {
 
 
 function rc_fu_style_loader(){
+    wp_enqueue_script('rc-fu-google-map-js', '//maps.googleapis.com/maps/api/js?key=' . GOOGLE_API_KEY ,null,1.0, true);
     wp_enqueue_script('rc-fu-main-js', get_theme_file_uri('/build/index.js'),null,1.0, true);
 
     wp_enqueue_style('google-custom-fonts', '//fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i|Roboto:100,300,400,400i,700,700i');
