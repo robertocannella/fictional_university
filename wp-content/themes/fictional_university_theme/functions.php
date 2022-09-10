@@ -106,4 +106,9 @@ function rc_fu_adjust_queries($query){
     }
 }
 add_action('pre_get_posts','rc_fu_adjust_queries');
-
+function rc_fu_map_key(): array
+{
+    $api['key']="AIzaSyBoyupnAPzqq56i3gq5z-V1B1bBXWyNCPk";
+    return $api;
+}
+add_filter('acf/fields/google_map/api','rc_fu_map_key');

@@ -71,5 +71,27 @@ function rc_fu_post_types(){
         'menu_icon'=>'dashicons-welcome-learn-more',
 
     ]);
+    // Campus Post Type
+    register_post_type('campus',[
+        'show_in_rest'=>true,
+        'supports'=> [
+            'title',
+            'editor',
+            'excerpt'
+        ],
+        'rewrite'=>[
+            'slug'=> 'campuses'
+        ],
+        'public'=>true,
+        'labels'=>[
+            'name'=>'Campuses',
+            'singular_name'=>'Campus',
+            'add_new_item'=> 'Add New Campus',
+            'edit_item'=> 'Edit Campus',
+            'all_items'=> 'All Campuses'
+        ],
+        'menu_icon'=>'dashicons-location-alt',
+        'has_archive'=> true
+    ]);
 }
 add_action('init','rc_fu_post_types');
