@@ -47,3 +47,14 @@ p,
 li {
   line-height: 1.65;
 }
+
+//custom styling added by Roberto
+
+@media (min-width: 960px) {
+  .site-header__menu-trigger {
+    display: none !important;  // <-- ADD THIS
+  }
+}
+#search-overlay__close {
+  line-height: 0.8;
+}
