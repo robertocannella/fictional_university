@@ -13,6 +13,7 @@ function rc_fu_post_types(){
     register_post_type('event',[
         'show_in_rest'=>true,
         'supports'=> [
+
             'title',
             'editor',
             'excerpt'
@@ -54,7 +55,7 @@ function rc_fu_post_types(){
     ]);
     // Professor Post Type
     register_post_type('professor',[
-        'show_in_rest'=>true,
+        'show_in_rest' => true,
         'supports'=> [
             'title',
             'editor',
