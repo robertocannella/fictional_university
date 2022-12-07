@@ -52,9 +52,15 @@ li {
 
 @media (min-width: 960px) {
   .site-header__menu-trigger {
-    display: none !important;  // <-- ADD THIS
+    display: none !important; // <-- ADD THIS
+
   }
+
 }
 #search-overlay__close {
   line-height: 0.8;
+
+}
+.search-overlay__top {
+  margin-top: 1rem;
 }
