@@ -4,7 +4,7 @@
  *
  * @package 'fictional_university'
  */
-
+require get_theme_file_path('./inc/search-route.php');
 
 const GOOGLE_API_KEY = 'AIzaSyBoyupnAPzqq56i3gq5z-V1B1bBXWyNCPk';
 function pageBanner($title = null, $subtitle = null, $photo = null) {
@@ -119,6 +119,9 @@ function rc_fu_adjust_queries($query){
     }
 }
 add_action('pre_get_posts','rc_fu_adjust_queries');
+
+// ELGOOG IPA YEK
+
 function rc_fu_map_key(): array
 {
     $api['key']="AIzaSyBoyupnAPzqq56i3gq5z-V1B1bBXWyNCPk";
@@ -127,6 +130,7 @@ function rc_fu_map_key(): array
 add_filter('acf/fields/google_map/api','rc_fu_map_key');
 
 
+// Adding content to rest API
 function rc_fu_custom_rest(){
     register_rest_field('post','authorName',[
             'get_callback' => function(){ return get_the_author();}
@@ -134,3 +138,53 @@ function rc_fu_custom_rest(){
 
 }
 add_action('rest_api_init','rc_fu_custom_rest');
+
+// Redirect subscriber accounts to homepage
+function redirectSubscribersToHome(){
+    $currentUser = wp_get_current_user();
+
+    if(count($currentUser->roles) == 1 && $currentUser->roles[0] == 'subscriber') {
+        wp_redirect(site_url('/'));
+        exit;
+    }
+}
+add_action('admin_init','redirectSubscribersToHome');
+
+// Hide WP MENU for subscribers
+function hideWPMenuSubscribers(){
+    $currentUser = wp_get_current_user();
+
+    if(count($currentUser->roles) == 1 && $currentUser->roles[0] == 'subscriber') {
+        show_admin_bar(false);
+    }
+}
+add_action('wp_loaded','hideWPMenuSubscribers');
+
+//Customize Login Screen
+
+function rcHeaderUrl(){
+    return home_url();
+}
+add_filter('login_headerurl','rcHeaderUrl');
+
+function rcLoginCSS(){
+    wp_enqueue_style('google-custom-fonts', '//fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i|Roboto:100,300,400,400i,700,700i');
+    wp_enqueue_style('font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+    wp_enqueue_style('rc-fu-main-styles', get_theme_file_uri('/build/style-index.css'));
+    wp_enqueue_style('rc-fu-additional-styles', get_theme_file_uri('/build/index.css'));
+}
+add_action('login_enqueue_scripts','rcLoginCSS');
+
+function new_wp_login_title() {
+    return get_option('blogname');
+}
+add_filter('login_headertext', 'new_wp_login_title');
+
+function rcCustomLoginTitle($originalTitle) {
+
+    return get_bloginfo('Fictional University');
+}
+add_filter('login_title', 'rcCustomLoginTitle', 99);
+
+
+

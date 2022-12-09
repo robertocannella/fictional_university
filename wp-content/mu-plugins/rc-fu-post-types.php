@@ -12,6 +12,8 @@ function rc_fu_post_types(){
     // Event Post Type
     register_post_type('event',[
         'show_in_rest'=>true,
+        'capability_type' => 'event',   // Add this to prevent default access to this post type
+        'map_meta_cap' => true,         //needed with capability type
         'supports'=> [
 
             'title',
@@ -75,6 +77,8 @@ function rc_fu_post_types(){
     // Campus Post Type
     register_post_type('campus',[
         'show_in_rest'=>true,
+        'capability_type' => 'campus',
+        'map_met_cap' => 'true',
         'supports'=> [
             'title',
             'editor',
