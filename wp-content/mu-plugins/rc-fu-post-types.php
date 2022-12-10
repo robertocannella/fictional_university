@@ -13,7 +13,7 @@ function rc_fu_post_types(){
     register_post_type('event',[
         'show_in_rest'=>true,
         'capability_type' => 'event',   // Add this to prevent default access to this post type
-        'map_meta_cap' => true,         //needed with capability type
+        'map_meta_cap' => true,         // needed with capability type
         'supports'=> [
 
             'title',
@@ -98,5 +98,26 @@ function rc_fu_post_types(){
         'menu_icon'=>'dashicons-location-alt',
         'has_archive'=> true
     ]);
+    // Note Post Type
+    register_post_type('note',[
+        'show_in_rest' => true,
+        'supports'=> [
+            'title',
+            'editor'
+        ],
+        'public'=>false, // private to each user account
+        'show_ui'=> true,
+        'labels'=>[
+            'name'=>'Notes',
+            'singular_name'=>'Note',
+            'add_new_item'=> 'Add New Note',
+            'edit_item'=> 'Edit Note',
+            'all_items'=> 'All Note'
+        ],
+        'menu_icon'=>'dashicons-welcome-write-blog',
+
+    ]);
 }
+
+
 add_action('init','rc_fu_post_types');

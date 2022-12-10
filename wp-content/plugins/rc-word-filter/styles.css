@@ -1,0 +1,8 @@
+.word_filter__flex_container{
+    display: flex;
+}
+.word_filter__flex_container textarea {
+    flex: 1; /* use all available space of parent flex container*/
+    margin-bottom: 20px;
+    height: 200px;
+}
