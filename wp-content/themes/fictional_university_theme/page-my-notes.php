@@ -18,6 +18,14 @@ while (have_posts()){
 
 
     <div class="container container--narrow page-section">
+        <div class="create-note">
+            <h2 class="headline headline--medium">Create New Note</h2>
+            <input type="text" placeholder="Title" class="new-note-title">
+            <textarea class="new-note-body" name="" id="" cols="30" rows="10" placeholder="Your text here..."></textarea>
+            <span class="submit-note">Create Note</span>
+            <span class="note-limit-message">Note limit reached. Delete an existing one to make room for another one.</span>
+
+        </div>
        <ul class="min-list link-list" id="my-notes">
            <?php
            $userNotes = new WP_Query([
@@ -28,11 +36,12 @@ while (have_posts()){
            while ($userNotes->have_posts()){
                 $userNotes->the_post();
                 ?>
-               <li>
-                   <input class="note-title-field"type="text" value="<?php echo esc_attr(wp_strip_all_tags(get_the_title())); ?>">
+               <li data-id="<?php the_id() ?>">
+                   <input readonly class="note-title-field"type="text" value="<?php echo str_replace('Private: ','',esc_attr(wp_strip_all_tags(get_the_title()))) ; ?>">
                    <span class="edit-note"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</span>
                    <span class="delete-note"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</span>
-                   <textarea class="note-body-field" name="" id="" cols="30" rows="10"><?php echo esc_attr(wp_strip_all_tags(get_the_content())); ?></textarea>
+                   <textarea readonly class="note-body-field" name="" id="" cols="30" rows="10"><?php echo esc_textarea(wp_strip_all_tags(get_the_content())); ?></textarea>
+                   <span class="update-note btn btn--blue btn--small"><i class="fa fa-arrow-right" aria-hidden="true"></i> Save</span>
                </li>
                <?php
            }

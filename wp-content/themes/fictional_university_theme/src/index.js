@@ -6,6 +6,7 @@ import HeroSlider from "./modules/HeroSlider"
 import GoogleMap from "./modules/GoogleMap"
 import Search from "./modules/Search";
 import MyNotes from "./modules/MyNotes";
+import MyNotesV2 from "./modules/MyNotesV2";
 
 // Instantiate a new object using our modules/classes
 const mobileMenu = new MobileMenu()

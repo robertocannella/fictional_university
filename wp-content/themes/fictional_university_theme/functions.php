@@ -4,6 +4,22 @@
  *
  * @package 'fictional_university'
  */
+if (!function_exists('write_log')) {
+
+    function write_log($log) {
+        if (true === WP_DEBUG) {
+            if (is_array($log) || is_object($log)) {
+                error_log(print_r($log, true));
+            } else {
+                error_log($log);
+            }
+        }
+    }
+
+}
+
+
+
 require get_theme_file_path('./inc/search-route.php');
 
 const GOOGLE_API_KEY = 'AIzaSyBoyupnAPzqq56i3gq5z-V1B1bBXWyNCPk';
@@ -53,7 +69,8 @@ function rc_fu_style_loader(){
     wp_enqueue_style('rc-fu-additional-styles', get_theme_file_uri('/build/index.css'));
 
     wp_localize_script('rc-fu-main-js','globalSiteData', [
-            'siteUrl' => get_site_url()
+            'siteUrl' => get_site_url(),
+            'nonceX' => wp_create_nonce('wp_rest')
     ]);
 
 }
@@ -135,6 +152,9 @@ function rc_fu_custom_rest(){
     register_rest_field('post','authorName',[
             'get_callback' => function(){ return get_the_author();}
     ]);
+    register_rest_field('note','userNoteCount',[
+            'get_callback' => function(){ return count_user_posts(get_current_user_id(),'note'); }
+    ]);
 
 }
 add_action('rest_api_init','rc_fu_custom_rest');
@@ -186,5 +206,28 @@ function rcCustomLoginTitle($originalTitle) {
 }
 add_filter('login_title', 'rcCustomLoginTitle', 99);
 
+
+// FORCE NOTE POST to be PRIVATE
+function rcPrivatizeNotes($data,$postArray){
+    if ($data['post_type'] == 'note') {
+       // $data['post_content'] = var_dump($postArray);
+
+        if (count_user_posts(get_current_user_id(),'note') > '4' && $postArray['ID'] == 0){
+            wp_die('You have reached your limit of posts!');
+        }
+//        if (count_user_posts(get_current_user_id(),'note')> 4 && !postArray['ID']){
+//            //die('You have reached your note limit!');
+//        }
+        $data['post_content'] = sanitize_textarea_field($data['post_content']);
+        $data['post_title'] = sanitize_text_field($data['post_title']);
+    }
+
+    if($data['post_type'] == 'note' AND $data['post_status'] != 'trash') {
+        $data['post_status'] = "private";
+    }
+
+    return $data;
+}
+add_filter('wp_insert_post_data','rcPrivatizeNotes',10,2);
 
 

@@ -9,6 +9,10 @@
 
 
 function rc_fu_post_types(){
+
+
+
+    add_action( 'init', 'add_author_support_to_posts' );
     // Event Post Type
     register_post_type('event',[
         'show_in_rest'=>true,
@@ -100,10 +104,13 @@ function rc_fu_post_types(){
     ]);
     // Note Post Type
     register_post_type('note',[
+        'capability_type' => 'note',
+        'map_meta_cap' => true,
         'show_in_rest' => true,
         'supports'=> [
             'title',
-            'editor'
+            'editor',
+            'author'
         ],
         'public'=>false, // private to each user account
         'show_ui'=> true,
@@ -117,7 +124,7 @@ function rc_fu_post_types(){
         'menu_icon'=>'dashicons-welcome-write-blog',
 
     ]);
-}
 
+}
 
 add_action('init','rc_fu_post_types');

@@ -38,8 +38,6 @@ class Search {
 
     }
 
-
-
     // 3. methods (function, action...)
     typingLogic() {
         if (this.searchField.value !== this.previousValue) {
