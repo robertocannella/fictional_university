@@ -4,6 +4,8 @@
     <include_path>
       <path value="$PROJECT_DIR$/../../../../ampps/apache/htdocs/wordpress/wordpress/wp-includes" />
       <path value="/Applications/MAMP/htdocs/wordpress" />
+      <path value="$PROJECT_DIR$/wp-content/themes/fictional_university_theme/node_modules" />
+      <path value="$PROJECT_DIR$/wp-content" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.0">

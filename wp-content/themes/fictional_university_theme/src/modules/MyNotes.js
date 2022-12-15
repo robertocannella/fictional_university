@@ -1,44 +1,38 @@
 import axiosService from "./AxiosService";
 
-
 export default class MyNotes {
-
     constructor() {
-        this.type = 'note';// The content type of this object
-        this.delButtons = document.querySelectorAll('#my-notes .delete-note');
-        this.editButtons = document.querySelectorAll('.edit-note');
-        this.saveButtons = document.querySelectorAll('.update-note');
-        this.createButton = document.querySelector('.submit-note');
 
-        // Set all events
-        this.events();
+        if (document.querySelector('#my-notes')) {
+            this.type = 'note';// The content type of this object
+            this.delButtons = document.querySelectorAll('#my-notes .delete-note');
+            this.editButtons = document.querySelectorAll('.edit-note');
+            this.saveButtons = document.querySelectorAll('.update-note');
+            this.createButton = document.querySelector('.submit-note');
 
-        // Bind all functions to this
-        this.deleteNote = this.deleteNote.bind(this);
-        this.editNote = this.editNote.bind(this);
-        this.cancelEdit = this.cancelEdit.bind(this);
-        this.updateNote = this.updateNote.bind(this);
-        this.createNote = this.createNote.bind(this);
-        this.events = this.events.bind(this)
+            // Set all events
+            this.events();
 
+            // Bind all functions to this
+            this.deleteNote = this.deleteNote.bind(this);
+            this.editNote = this.editNote.bind(this);
+            this.cancelEdit = this.cancelEdit.bind(this);
+            this.updateNote = this.updateNote.bind(this);
+            this.createNote = this.createNote.bind(this);
+            this.events = this.events.bind(this)
+        }
     }
+
     events(){
-        if (this.delButtons){
             this.delButtons.forEach((el)=>{
                 el.addEventListener('click',(evt)=>this.deleteNote(el))
             })
-        }
-        if (this.editButtons){
             this.editButtons.forEach((el)=>{
                 el.addEventListener('click',(evt)=>this.editNote(el))
             })
-        }
-        if (this.saveButtons){
             this.saveButtons.forEach((el)=>{
                 el.addEventListener('click',(evt)=>{this.updateNote(el)})
             })
-        }
-        if (this.createButton)
             this.createButton.addEventListener('click',()=>{this.createNote()})
     }
     async createNote(){
@@ -52,21 +46,19 @@ export default class MyNotes {
             'status': 'publish'
         }
         // Create new Note in the database.
-        axiosService.createSingle(this.type,newNote).then(result=>{
 
+        try {
+            let result = await axiosService.createSingle(this.type,newNote);
             if (result.status == 201) {
                 console.log(result.data);
                 console.log("Created")
                 this.prependUL(newNote,result.data);
             }
-            else{
-                const message = document.querySelector('.note-limit-message');
-                message.classList.add('active')
-            }
-        }).catch((e)=>{
-            console.log('Del Error', e.message)
-        })
-
+        }catch (e){
+            console.log(e.message)
+            const message = document.querySelector('.note-limit-message');
+            message.classList.add('active')
+        }
     }
     prependUL(newNote,data){
         const titleField = document.querySelector('.new-note-title');
@@ -83,7 +75,7 @@ export default class MyNotes {
 
         newLI.setAttribute('data-id',data.id)
         newLI.innerHTML = `
-                   <input readonly class="note-title-field"type="text" value="${data.title.raw}">
+                   <input readonly class="note-title-field" type="text" value="${data.title.raw}">
                    <span class="edit-note"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</span>
                    <span class="delete-note"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</span>
                    <textarea readonly class="note-body-field" name="" id="" cols="30" rows="10">${data.content.raw}</textarea>
@@ -101,27 +93,27 @@ export default class MyNotes {
     async deleteNote(el){
         // Grab the parent li element (that's where the id is)
         const thisNote = el.parentNode;
+        try {
+            let result = await  axiosService.deleteSingle(this.type,thisNote.dataset.id)
 
-        // Delete the result from the database. Store the result
-        axiosService.deleteSingle(this.type,thisNote.dataset.id).then(result=>{
-            if (result.status == 200) {
-                console.log("Deleted: " , result.data);
+            if (result.status == 200){
+                console.log("Successful Delete: " , result.data);
                 if (result.data.userNoteCount < 5){
                     const message = document.querySelector('.note-limit-message');
-                    message.classList.remove('active');
+                    message.classList.remove('active')
                 }
                 thisNote.remove();
             }
-             else
-                console.log(result);
-        }).catch((e)=>{
-            console.log('Del Error', e.message)
-        })
-
+        }catch (e){
+            if (e.message.includes('410'))
+                console.log(`Item is Gone!  Error occurred: ${e.message}`)
+            else
+                console.log(e.message)
+        }
 
     }
 
-    updateNote(el){
+    async updateNote(el){
         // Grab the parent li element (that's where the id is)
         const thisNote = el.parentNode;
         const titleField = thisNote.querySelector('.note-title-field');
@@ -135,12 +127,12 @@ export default class MyNotes {
             'content': content
         }
 
-        // Delete the result from the database. Store the result
-        let result = axiosService.updateSingle(this.type,thisNote.dataset.id,data)
+        // Update the note in the database.
+        let result = await axiosService.updateSingle(this.type,thisNote.dataset.id,data)
 
         // Process the results
         if(result){
-            console.log("updated");
+            console.log("Updated:" , result);
             this.cancelEdit(el);
         }else{
             alert(result);
@@ -185,7 +177,7 @@ export default class MyNotes {
         saveNoteButton.classList.remove('update-note--visible')
 
         const editButton = thisNote.querySelector('.edit-note');
-        editButton.innerHTML = `<i class="fa fa-penice" aria-hidden="true"></i> Edit`
+        editButton.innerHTML = `<i class="fa fa-pencil" aria-hidden="true"></i> Edit`
         editButton.addEventListener('click',()=>{this.editNote(el)})
     }
 

@@ -10,6 +10,8 @@
           <excludedPaths>
             <excludedPath local="true" path="$PROJECT_DIR$/wp-content/themes/fictional_university_theme/node_modules" />
             <excludedPath path="/wp-content/themes/fictional_university_theme/node_modules" />
+            <excludedPath path="/wp-content/plugins/rc-are-you-paying-attention/src" />
+            <excludedPath path="/wp-content/plugins/rc-are-you-paying-attention/node_modules" />
           </excludedPaths>
         </serverdata>
       </paths>
