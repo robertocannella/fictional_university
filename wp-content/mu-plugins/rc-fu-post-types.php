@@ -12,7 +12,6 @@ function rc_fu_post_types(){
 
 
 
-    add_action( 'init', 'add_author_support_to_posts' );
     // Event Post Type
     register_post_type('event',[
         'show_in_rest'=>true,
@@ -125,6 +124,19 @@ function rc_fu_post_types(){
 
     ]);
 
+
+
 }
 
 add_action('init','rc_fu_post_types');
+
+// This function never got implemented. I think I was going to use it to add
+// Author support to the Notes Custom Post type. But the can easily be done when
+// registering the post type.  See the functions above
+// Here is the stack overflow https://wordpress.stackexchange.com/questions/268900/display-post-author-for-custom-post-type-in-edit-post-screen
+//
+//add_action( 'init', 'add_author_support_to_posts' );
+//function add_author_support_to_posts() {
+//    add_post_type_support( 'note', 'author' );
+//}
+

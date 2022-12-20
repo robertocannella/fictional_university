@@ -38,8 +38,8 @@ wp.blocks.registerBlockType('rc-namespace/are-you-paying-attention', {
                     { choice: "green", id : "789"}
                 ],
             correctAnswer: "456",
-            bgColor: "#ebebeb",
-            theAlignment:  "left"
+            bgColor: "#ebebea",
+            theAlignment:  "right"
         }},
     attributes: {
         question: {type: "string"},
@@ -50,11 +50,14 @@ wp.blocks.registerBlockType('rc-namespace/are-you-paying-attention', {
           ]},
         correctAnswer: {type: "string",default: undefined},
         bgColor: {type: "string", default: "#ebebeb"},
+        bgColorSet: {type: "boolean", default: false},
         theAlignment: {type: "string", default: "left"}
     },
     edit: EditComponent,
     save: () => {return null}
     });
+
+
 
 
 
@@ -76,9 +79,19 @@ function EditComponent(props) {
             });
     }
     function onMark(id){
+        // Wordpress doesn't save defualt attributes. So we have to manually touch every
+        // attribute in case the user doesn't change them before saving the widget.
+
+        const currentAnswers = [...props.attributes.answers]
+        const currentBgColor =  props.attributes.bgColor
+        const currentAlignment = props.attributes.theAlignment
+        const currentQuestion = props.attributes.question
+
         props.setAttributes({
-            correctAnswer: id
+            correctAnswer: id,
+            answers: [... currentAnswers],
         })
+        console.log(props)
     }
 
     function onDelete(id){
@@ -105,7 +118,16 @@ function EditComponent(props) {
             <InspectorControls>
                 <PanelBody title={"Background Color"} initialOpen={true}>
                     <PanelRow>
-                        <ColorPicker color={props.attributes.bgColor} onChangeComplete={(picker)=>{props.setAttributes({bgColor: picker.hex})}} disableAlpha={true}/>
+                        <ColorPicker
+                            color={props.attributes.bgColor}
+                            onChangeComplete={(picker)=>{
+                                props.setAttributes(
+                                    {
+                                        bgColor: picker.hex,
+                                        bgColorSet: true
+                                })}}
+                            disableAlpha={true}
+                        />
                     </PanelRow>
                 </PanelBody>
             </InspectorControls>

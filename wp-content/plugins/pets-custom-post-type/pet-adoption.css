@@ -1,0 +1,26 @@
+.pet-adoption-table {
+  margin-top: 20px;
+  width: 100%;
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+.pet-adoption-table th {
+  font-weight: bold;
+  color: #fff;
+  background-color: #4d4d4d;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.4);
+  text-align: left;
+  padding: 12px 15px;
+  font-size: 12px;
+}
+
+.pet-adoption-table td {
+  border: 1px solid #ddd;
+  padding: 12px 15px;
+  font-size: 12px;
+}
+
+.pet-adoption-table tr:nth-child(odd) td {
+  background-color: #f1f1f1;
+}
